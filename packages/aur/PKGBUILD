@@ -1,0 +1,67 @@
+name=networkbuster
+pkgname=networkbuster
+pkgver=1.0.1
+pkgrel=1
+pkgdesc="High-performance network server built with Node.js and Express"
+arch=('x86_64' 'aarch64')
+url="https://networkbuster.net"
+license=('MIT')
+depends=('nodejs>=24' 'npm')
+optdepends=('postgresql: for database support'
+            'redis: for caching'
+            'nginx: for reverse proxy')
+source=("https://github.com/NetworkBuster/networkbuster.net/archive/v${pkgver}.tar.gz")
+sha256sums=('0000000000000000000000000000000000000000000000000000000000000000')
+maintainer="NetworkBuster Developers <dev@networkbuster.net>"
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    npm install --production
+}
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    
+    # Install files
+    mkdir -p "${pkgdir}/opt/networkbuster"
+    cp -r . "${pkgdir}/opt/networkbuster/"
+    
+    # Create symlink
+    mkdir -p "${pkgdir}/usr/local/bin"
+    ln -s /opt/networkbuster/server.js "${pkgdir}/usr/local/bin/networkbuster"
+    
+    # Install systemd service
+    mkdir -p "${pkgdir}/usr/lib/systemd/system"
+    cat > "${pkgdir}/usr/lib/systemd/system/networkbuster.service" << EOF
+[Unit]
+Description=NetworkBuster Server
+After=network.target
+
+[Service]
+Type=simple
+User=networkbuster
+WorkingDirectory=/opt/networkbuster
+ExecStart=/usr/bin/node /opt/networkbuster/server.js
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+EOF
+    
+    # Install license
+    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}
+
+post_install() {
+    useradd -r -m -d /opt/networkbuster -s /usr/bin/nologin networkbuster 2>/dev/null || true
+    chown -R networkbuster:networkbuster /opt/networkbuster
+    systemctl daemon-reload
+    echo "To start NetworkBuster: systemctl start networkbuster"
+    echo "To enable on boot: systemctl enable networkbuster"
+}
+
+post_remove() {
+    userdel networkbuster 2>/dev/null || true
+    systemctl daemon-reload
+}

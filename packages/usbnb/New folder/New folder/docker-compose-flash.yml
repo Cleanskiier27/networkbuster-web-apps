@@ -1,0 +1,119 @@
+# NetworkBuster Docker Compose - Terminal Flash USB Upgrade
+# Usage: docker-compose -f docker-compose-flash.yml up
+
+version: '3.8'
+
+services:
+  # Main Flash USB Upgrade Service
+  flash-upgrade:
+    build:
+      context: .
+      dockerfile: Dockerfile.flash
+    container_name: networkbuster-flash-upgrade
+    privileged: true  # Required for USB access
+    volumes:
+      - /dev:/dev:rw  # USB device access
+      - ./flash-data:/app/flash-data
+      - ./backups:/app/backups
+      - type: bind
+        source: ${USB_MOUNT_PATH:-D:/}
+        target: /mnt/usb
+    environment:
+      - NODE_ENV=production
+      - FLASH_MODE=upgrade
+      - USB_DEVICE=${USB_DEVICE:-/dev/sda1}
+      - BACKUP_ENABLED=true
+      - AUTO_BOOT_CONFIG=true
+    ports:
+      - "3004:3004"
+    networks:
+      - networkbuster-net
+    restart: unless-stopped
+    command: ["node", "flash-upgrade-service.js"]
+
+  # Power Management Service
+  power-manager:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: networkbuster-power
+    volumes:
+      - ./:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - POWER_OPTION=2
+      - BOOT_INJECT=true
+    ports:
+      - "3005:3005"
+    networks:
+      - networkbuster-net
+    depends_on:
+      - flash-upgrade
+    command: ["node", "power-manager.js", "2"]
+
+  # Web Server
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: networkbuster-web
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+    networks:
+      - networkbuster-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # API Server
+  api:
+    build:
+      context: ./api
+      dockerfile: ../Dockerfile
+    container_name: networkbuster-api
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+    networks:
+      - networkbuster-net
+
+  # Audio Server
+  audio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: networkbuster-audio
+    ports:
+      - "3002:3002"
+    environment:
+      - PORT=3002
+    networks:
+      - networkbuster-net
+    command: ["node", "server-audio.js"]
+
+  # Auth UI Server
+  auth:
+    build:
+      context: ./auth-ui/v750
+      dockerfile: Dockerfile
+    container_name: networkbuster-auth
+    ports:
+      - "3003:3003"
+    environment:
+      - PORT=3003
+    networks:
+      - networkbuster-net
+
+networks:
+  networkbuster-net:
+    driver: bridge
+
+volumes:
+  flash-data:
+  backups:

@@ -1,0 +1,47 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f8fafd;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 32px 24px;
+}
+
+h1 {
+  color: #222;
+  text-align: center;
+  margin-bottom: 18px;
+  font-size: 2.2rem;
+}
+
+.admin-panel {
+  margin-top: 32px;
+  background: #f5f7fa;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.admin-panel h2 {
+  margin-top: 0;
+  color: #0066cc;
+  font-size: 1.3rem;
+}
+
+.admin-panel ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-panel li {
+  margin-bottom: 10px;
+  font-size: 1.05rem;
+}

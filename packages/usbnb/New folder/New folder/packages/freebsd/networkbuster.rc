@@ -1,0 +1,45 @@
+#!/bin/sh
+# FreeBSD rc.d startup script for NetworkBuster
+
+. /etc/rc.subr
+
+name="networkbuster"
+rcvar=networkbuster_enable
+
+load_rc_config $name
+
+: ${networkbuster_enable:="NO"}
+: ${networkbuster_user:="www"}
+: ${networkbuster_group:="www"}
+: ${networkbuster_chdir:="/opt/networkbuster"}
+: ${networkbuster_pid_file:="/var/run/${name}.pid"}
+: ${networkbuster_log_file:="/var/log/${name}.log"}
+: ${networkbuster_port:="3000"}
+
+pidfile="${networkbuster_pid_file}"
+procname="/usr/local/bin/node"
+command="/usr/sbin/daemon"
+command_args="-f -P ${pidfile} -u ${networkbuster_user} -g ${networkbuster_group} \
+    -o ${networkbuster_log_file} ${procname} \
+    ${networkbuster_chdir}/server.js"
+
+networkbuster_start() {
+    echo "Starting ${name}..."
+    ${command} ${command_args}
+}
+
+networkbuster_stop() {
+    echo "Stopping ${name}..."
+    if [ -f ${pidfile} ]; then
+        kill $(cat ${pidfile}) 2>/dev/null
+        rm -f ${pidfile}
+    fi
+}
+
+networkbuster_restart() {
+    networkbuster_stop
+    sleep 2
+    networkbuster_start
+}
+
+run_rc_command "$1"

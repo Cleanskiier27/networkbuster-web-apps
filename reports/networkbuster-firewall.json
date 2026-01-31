@@ -1,0 +1,45 @@
+﻿{
+    "generated":  "2025-12-21T12:06:27.4229364-07:00",
+    "rules":  [
+                  {
+                      "DisplayName":  "NetworkBuster (Node)",
+                      "Enabled":  1,
+                      "Profile":  7,
+                      "Direction":  1,
+                      "Action":  2,
+                      "Program":  null,
+                      "LocalPort":  null,
+                      "Service":  null
+                  },
+                  {
+                      "DisplayName":  "NetworkBuster (TCP 3000)",
+                      "Enabled":  1,
+                      "Profile":  7,
+                      "Direction":  1,
+                      "Action":  2,
+                      "Program":  null,
+                      "LocalPort":  null,
+                      "Service":  null
+                  },
+                  {
+                      "DisplayName":  "NetworkBuster (TCP 3001)",
+                      "Enabled":  1,
+                      "Profile":  7,
+                      "Direction":  1,
+                      "Action":  2,
+                      "Program":  null,
+                      "LocalPort":  null,
+                      "Service":  null
+                  },
+                  {
+                      "DisplayName":  "NetworkBuster (Service)",
+                      "Enabled":  1,
+                      "Profile":  7,
+                      "Direction":  1,
+                      "Action":  2,
+                      "Program":  null,
+                      "LocalPort":  null,
+                      "Service":  null
+                  }
+              ]
+}

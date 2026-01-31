@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+
+# Debian preinst script
+# Called before package installation
+
+# Create service user if it doesn't exist
+if ! id "networkbuster" >/dev/null 2>&1; then
+    useradd --system --no-create-home --shell /bin/false networkbuster || true
+fi
+
+# Stop existing service if running
+if systemctl is-active --quiet networkbuster 2>/dev/null; then
+    systemctl stop networkbuster || true
+fi
+
+exit 0

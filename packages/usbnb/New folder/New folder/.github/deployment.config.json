@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "env": {
+    "GITHUB_WEBHOOK_SECRET": "@github_webhook_secret"
+  },
+  "branches": [
+    {
+      "name": "main",
+      "deploymentName": "networkbuster-prod",
+      "environment": "production",
+      "autoSync": true,
+      "syncWith": "bigtree"
+    },
+    {
+      "name": "bigtree",
+      "deploymentName": "networkbuster-staging",
+      "environment": "staging",
+      "autoSync": true,
+      "syncWith": "main"
+    }
+  ],
+  "deploymentRules": {
+    "onPush": {
+      "main": "vercel --prod",
+      "bigtree": "vercel --prod --target staging"
+    },
+    "onPullRequest": {
+      "enabled": true,
+      "requireReview": true
+    }
+  },
+  "notifications": {
+    "slack": true,
+    "email": true,
+    "github": true
+  }
+}

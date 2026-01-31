@@ -1,0 +1,63 @@
+name: networkbuster
+version: 1.0.1
+summary: High-performance network server built with Node.js and Express
+description: |
+  NetworkBuster is a production-ready server application providing powerful
+  networking capabilities with built-in health checks, logging, and monitoring.
+  
+  Features:
+  - Express.js web framework
+  - Node.js 24.x runtime
+  - Docker support
+  - Production-ready configuration
+  - Health monitoring endpoints
+  - Comprehensive logging
+
+grade: stable
+confinement: strict
+base: core22
+architectures:
+  - build-on: amd64
+  - build-on: arm64
+
+apps:
+  networkbuster:
+    command: bin/server
+    daemon: simple
+    restart-condition: on-failure
+    plugs:
+      - network
+      - network-bind
+      - home
+      - removable-media
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+
+parts:
+  networkbuster:
+    plugin: dump
+    source: https://github.com/NetworkBuster/networkbuster.net/archive/refs/tags/v1.0.1.tar.gz
+    source-type: tar
+    build-packages:
+      - node-gyp
+      - python3
+      - build-essential
+    stage-packages:
+      - nodejs
+      - npm
+    override-build: |
+      npm install --production
+      mkdir -p $SNAPCRAFT_PART_INSTALL/bin
+      cp server.js $SNAPCRAFT_PART_INSTALL/bin/
+      cp -r . $SNAPCRAFT_PART_INSTALL/
+    override-stage: |
+      craftctl default
+      # Fix permissions
+      chmod -R a+rX $SNAPCRAFT_STAGE
+
+layout:
+  /opt/networkbuster:
+    bind: $SNAP/opt/networkbuster
+  /var/log/networkbuster:
+    bind: $SNAP_DATA/var/log/networkbuster

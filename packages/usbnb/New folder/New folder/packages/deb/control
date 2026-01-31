@@ -1,0 +1,35 @@
+#!/bin/bash
+set -e
+
+# NetworkBuster Debian Package Control File
+# This file defines the package metadata and scripts for Debian/Ubuntu distributions
+
+Source: networkbuster
+Section: admin
+Priority: optional
+Maintainer: NetworkBuster Developers <dev@networkbuster.net>
+Homepage: https://networkbuster.net
+Vcs-Git: https://github.com/NetworkBuster/networkbuster.net.git
+Vcs-Browser: https://github.com/NetworkBuster/networkbuster.net
+
+Package: networkbuster
+Version: 1.0.1
+Architecture: amd64
+Depends: nodejs (>= 24.0.0), npm, adduser
+Recommends: postgresql, redis-server, nginx
+Suggests: docker.io, docker-compose
+Provides: networkbuster-server
+Conflicts: networkbuster-old
+Replaces: networkbuster-old
+Homepage: https://networkbuster.net
+Description: High-performance network server built with Node.js and Express
+ NetworkBuster is a production-ready server application providing powerful
+ networking capabilities with built-in health checks, logging, and monitoring.
+ .
+ Features:
+  - Express.js web framework
+  - Node.js 24.x runtime
+  - Docker support
+  - Production-ready configuration
+  - Health monitoring endpoints
+  - Comprehensive logging

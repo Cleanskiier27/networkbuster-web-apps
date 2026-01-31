@@ -1,0 +1,45 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build:all || npm run build || true",
+  "devCommand": "npm start",
+  "installCommand": "npm ci --legacy-peer-deps || npm install",
+  "env": {
+    "NODE_ENV": "production",
+    "VERCEL_ENV": "production"
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/overlay/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/nasa/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "destination": "/index.html"
+    }
+  ]
+}

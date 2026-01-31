@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>networkbuster</id>
+    <version>1.0.1</version>
+    <packageSourceUrl>https://github.com/NetworkBuster/networkbuster.net</packageSourceUrl>
+    <owners>NetworkBuster</owners>
+    <title>NetworkBuster Server</title>
+    <authors>NetworkBuster Contributors</authors>
+    <projectUrl>https://networkbuster.net</projectUrl>
+    <iconUrl>https://networkbuster.net/logo.png</iconUrl>
+    <copyright>2025 NetworkBuster. All rights reserved.</copyright>
+    <licenseUrl>https://github.com/NetworkBuster/networkbuster.net/blob/main/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectSourceUrl>https://github.com/NetworkBuster/networkbuster.net</projectSourceUrl>
+    <docsUrl>https://docs.networkbuster.net</docsUrl>
+    <bugTrackerUrl>https://github.com/NetworkBuster/networkbuster.net/issues</bugTrackerUrl>
+    <tags>networkbuster server node express networking</tags>
+    <summary>High-performance network server built with Node.js and Express</summary>
+    <description>
+      NetworkBuster is a production-ready server application built with Node.js and Express.
+      It provides powerful networking capabilities with built-in health checks, logging, and monitoring.
+      
+      Features:
+      - Express.js web framework
+      - Node.js 24.x runtime
+      - Docker support
+      - Production-ready configuration
+      - Health monitoring endpoints
+      - Comprehensive logging
+    </description>
+    <releaseNotes>
+      Version 1.0.1 - December 14, 2025
+      - Initial stable release
+      - Docker support added
+      - Health check endpoints
+      - Comprehensive documentation
+    </releaseNotes>
+    <dependencies>
+      <dependency id="nodejs" version="[24.0.0,25.0.0)" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>

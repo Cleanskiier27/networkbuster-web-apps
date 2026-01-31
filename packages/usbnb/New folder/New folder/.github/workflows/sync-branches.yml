@@ -1,0 +1,37 @@
+name: Sync Branches
+
+on:
+  push:
+    branches:
+      - main
+      - bigtree
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+      
+      - name: Sync main → bigtree
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git fetch origin
+          git checkout bigtree
+          git merge origin/main --allow-unrelated-histories -m "Auto-sync: main → bigtree" || true
+          git push origin bigtree || true
+      
+      - name: Sync bigtree → main
+        if: github.ref == 'refs/heads/bigtree'
+        run: |
+          git fetch origin
+          git checkout main
+          git merge origin/bigtree --allow-unrelated-histories -m "Auto-sync: bigtree → main" || true
+          git push origin main || true

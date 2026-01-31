@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NetworkBuster Lunar Recycling System - Comprehensive documentation and technical specifications for lunar waste management">
+    <meta name="keywords" content="lunar recycling, space technology, NLRS, waste management, moon base">
+    <title>NetworkBuster Lunar Recycling System - Documentation Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chatbot.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-animation"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo-section">
+                <div class="logo-icon">🌙</div>
+                <div class="logo-text">
+                    <h1>NetworkBuster</h1>
+                    <p>Lunar Recycling System</p>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <!-- Main Pages -->
+                <a href="/" class="nav-link active">🏠 Home</a>
+                <a href="/about.html" class="nav-link">ℹ️ About</a>
+                <a href="/projects.html" class="nav-link">🚀 Projects</a>
+                <a href="/technology.html" class="nav-link">⚡ Technology</a>
+                <a href="/documentation.html" class="nav-link">📖 Docs</a>
+                <button id="toggle-netbot" class="nav-link" style="margin-left:16px;cursor:pointer;background:#0f3460;color:#fff;border:none;padding:8px 16px;border-radius:8px;">🤖 Net Bot: <span id="netbot-status">On</span></button>
+                
+                <!-- Apps Dropdown -->
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">🎮 Apps ▼</a>
+                    <div class="dropdown-menu">
+                        <a href="/dashboard/" class="dropdown-item">📊 Dashboard</a>
+                        <a href="/control-panel" class="dropdown-item">🎛️ Control Panel</a>
+                        <a href="/audio-lab" class="dropdown-item">🎵 Audio Lab</a>
+                        <a href="/auth/" class="dropdown-item">🔐 Auth Portal</a>
+                        <a href="/overlay/" class="dropdown-item">🌐 AI World</a>
+                    </div>
+                </div>
+                
+                <!-- Tools Dropdown -->
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">🛠️ Tools ▼</a>
+                    <div class="dropdown-menu">
+                        <a href="#calculator" class="dropdown-item">🧮 Calculator</a>
+                        <a href="#data" class="dropdown-item">💾 Data Center</a>
+                        <a href="/flash-commands.html" class="dropdown-item">⚡ Flash Commands</a>
+                        <a href="/packages.html" class="dropdown-item">📦 Packages</a>
+                        <a href="/hud.html" class="dropdown-item">🛰️ Function HUD</a>
+                        <a href="/blog/" class="dropdown-item">📝 Blog</a>
+                    </div>
+                </div>
+                
+                <a href="/contact.html" class="nav-link">✉️ Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2 class="hero-title">Sustainable Recycling for<br><span class="gradient-text">Lunar Environments</span></h2>
+                <p class="hero-description">
+                    The NetworkBuster Lunar Recycling System (NLRS) is an autonomous recycling platform designed specifically 
+                    for lunar surface operations, enabling sustainable waste management in the harshest environment.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <div class="stat-value">500g+</div>
+                        <div class="stat-label">Minimum Payload</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">95%</div>
+                        <div class="stat-label">Recovery Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">10+</div>
+                        <div class="stat-label">Year Lifetime</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">300°C</div>
+                        <div class="stat-label">Temp Range</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- System Overview -->
+    <section id="overview" class="section">
+        <div class="container">
+            <h2 class="section-title">System Architecture</h2>
+            <div class="architecture-grid">
+                <div class="arch-card" data-module="ipm">
+                    <div class="arch-icon">📥</div>
+                    <h3>Input Processing</h3>
+                    <p>Material intake with spectroscopic analysis and AI classification</p>
+                    <div class="arch-specs">
+                        <span>500g-50kg capacity</span>
+                        <span>50-100W power</span>
+                    </div>
+                </div>
+                <div class="arch-card" data-module="msu">
+                    <div class="arch-icon">🔍</div>
+                    <h3>Material Separation</h3>
+                    <p>Advanced sorting using optical, magnetic, and density methods</p>
+                    <div class="arch-specs">
+                        <span>>95% accuracy</span>
+                        <span>2-5 kg/hour</span>
+                    </div>
+                </div>
+                <div class="arch-card" data-module="thermal">
+                    <div class="arch-icon">🔥</div>
+                    <h3>Thermal Processing</h3>
+                    <p>Pyrolysis for plastics and composites, 150-400°C range</p>
+                    <div class="arch-specs">
+                        <span>300-800W power</span>
+                        <span>85-92% efficiency</span>
+                    </div>
+                </div>
+                <div class="arch-card" data-module="mechanical">
+                    <div class="arch-icon">⚙️</div>
+                    <h3>Mechanical Processing</h3>
+                    <p>Grinding, milling, and compaction for metals and glass</p>
+                    <div class="arch-specs">
+                        <span>100-300W power</span>
+                        <span>90-98% recovery</span>
+                    </div>
+                </div>
+                <div class="arch-card" data-module="biological">
+                    <div class="arch-icon">🌱</div>
+                    <h3>Biological Processing</h3>
+                    <p>Composting and biogas generation from organic waste</p>
+                    <div class="arch-specs">
+                        <span>20-50W power</span>
+                        <span>70-80% efficiency</span>
+                    </div>
+                </div>
+                <div class="arch-card" data-module="output">
+                    <div class="arch-icon">📦</div>
+                    <h3>Output Management</h3>
+                    <p>Automated packaging, labeling, and inventory tracking</p>
+                    <div class="arch-specs">
+                        <span>500kg storage</span>
+                        <span>RFID tracking</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Specifications -->
+    <section id="technical" class="section section-dark">
+        <div class="container">
+            <h2 class="section-title">Technical Specifications</h2>
+            <div class="specs-container">
+                <div class="spec-category">
+                    <h3>Processing Capabilities</h3>
+                    <table class="spec-table">
+                        <thead>
+                            <tr>
+                                <th>Material Type</th>
+                                <th>Rate (kg/day)</th>
+                                <th>Efficiency</th>
+                                <th>Output</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mixed Plastics</td>
+                                <td>3-5</td>
+                                <td>85-92%</td>
+                                <td>Pellets, Pyrolysis Oil</td>
+                            </tr>
+                            <tr>
+                                <td>Aluminum</td>
+                                <td>2-4</td>
+                                <td>95-98%</td>
+                                <td>Ingots, Powder</td>
+                            </tr>
+                            <tr>
+                                <td>Steel/Iron</td>
+                                <td>2-3</td>
+                                <td>90-95%</td>
+                                <td>Compacted Blocks</td>
+                            </tr>
+                            <tr>
+                                <td>Glass</td>
+                                <td>1-2</td>
+                                <td>80-85%</td>
+                                <td>Cullet</td>
+                            </tr>
+                            <tr>
+                                <td>Organics</td>
+                                <td>4-6</td>
+                                <td>70-80%</td>
+                                <td>Compost, Biogas</td>
+                            </tr>
+                            <tr>
+                                <td>Electronics</td>
+                                <td>0.5-1</td>
+                                <td>60-75%</td>
+                                <td>Components, Metals</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="spec-category">
+                    <h3>Environmental Adaptations</h3>
+                    <div class="env-grid">
+                        <div class="env-card">
+                            <h4>Vacuum Operations</h4>
+                            <p><strong>Challenge:</strong> 3×10⁻¹⁵ bar pressure</p>
+                            <p><strong>Solution:</strong> Sealed chambers, solid lubricants, space-rated materials</p>
+                        </div>
+                        <div class="env-card">
+                            <h4>Temperature Extremes</h4>
+                            <p><strong>Challenge:</strong> -173°C to +127°C</p>
+                            <p><strong>Solution:</strong> MLI blankets, active thermal control, phase-change materials</p>
+                        </div>
+                        <div class="env-card">
+                            <h4>Radiation Hardening</h4>
+                            <p><strong>Challenge:</strong> 200-300 mSv/year</p>
+                            <p><strong>Solution:</strong> Rad-hard electronics, triple redundancy, ECC memory</p>
+                        </div>
+                        <div class="env-card">
+                            <h4>Low Gravity</h4>
+                            <p><strong>Challenge:</strong> 1.62 m/s² (1/6 g)</p>
+                            <p><strong>Solution:</strong> Adapted separation, magnetic manipulation, centrifugal force</p>
+                        </div>
+                        <div class="env-card">
+                            <h4>Lunar Dust</h4>
+                            <p><strong>Challenge:</strong> Abrasive, clingy particles</p>
+                            <p><strong>Solution:</strong> Electrostatic repulsion, sealed mechanisms, self-cleaning optics</p>
+                        </div>
+                        <div class="env-card">
+                            <h4>Power Management</h4>
+                            <p><strong>Challenge:</strong> 14-day night cycle</p>
+                            <p><strong>Solution:</strong> 15 kWh battery, solar tracking, efficient operation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payload Calculator -->
+    <section id="calculator" class="section">
+        <div class="container">
+            <h2 class="section-title">Payload Processing Calculator</h2>
+            <div class="calculator-container">
+                <div class="calculator-input">
+                    <h3>Input Parameters</h3>
+                    <div class="input-group">
+                        <label for="materialType">Material Type</label>
+                        <select id="materialType">
+                            <option value="plastic">Mixed Plastics</option>
+                            <option value="aluminum">Aluminum</option>
+                            <option value="steel">Steel/Iron</option>
+                            <option value="glass">Glass</option>
+                            <option value="organic">Organics</option>
+                            <option value="ewaste">Electronics</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="inputMass">Input Mass (g)</label>
+                        <input type="number" id="inputMass" min="500" max="50000" value="5000" step="100">
+                        <span class="input-note">Min: 500g, Max: 50kg</span>
+                    </div>
+                    <button class="btn-calculate" onclick="calculateProcessing()">Calculate Processing</button>
+                </div>
+                <div class="calculator-output">
+                    <h3>Processing Results</h3>
+                    <div id="results" class="results-grid">
+                        <div class="result-item">
+                            <div class="result-label">Output Mass</div>
+                            <div class="result-value" id="outputMass">-</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Processing Time</div>
+                            <div class="result-value" id="processTime">-</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Energy Required</div>
+                            <div class="result-value" id="energyReq">-</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">Recovery Efficiency</div>
+                            <div class="result-value" id="efficiency">-</div>
+                        </div>
+                        <div class="result-item full-width">
+                            <div class="result-label">Output Products</div>
+                            <div class="result-value" id="products">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Environmental Data Visualization -->
+    <section id="data" class="section section-dark">
+        <div class="container">
+            <h2 class="section-title">Lunar Environment Data</h2>
+            <div class="data-grid">
+                <div class="data-card">
+                    <h3>Temperature Profile</h3>
+                    <div class="chart-container">
+                        <canvas id="tempChart"></canvas>
+                    </div>
+                    <p class="data-description">14-day lunar cycle showing extreme temperature variations from -173°C to +127°C</p>
+                </div>
+                <div class="data-card">
+                    <h3>Power Generation</h3>
+                    <div class="chart-container">
+                        <canvas id="powerChart"></canvas>
+                    </div>
+                    <p class="data-description">Solar power availability over lunar day/night cycle with battery backup</p>
+                </div>
+                <div class="data-card">
+                    <h3>Processing Throughput</h3>
+                    <div class="chart-container">
+                        <canvas id="throughputChart"></canvas>
+                    </div>
+                    <p class="data-description">Material processing rates by type showing system versatility</p>
+                </div>
+                <div class="data-card">
+                    <h3>System Efficiency</h3>
+                    <div class="chart-container">
+                        <canvas id="efficiencyChart"></canvas>
+                    </div>
+                    <p class="data-description">Recovery efficiency across different material categories</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Operations Timeline -->
+    <section id="operations" class="section">
+        <div class="container">
+            <h2 class="section-title">Standard Operations Timeline</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">1</div>
+                    <div class="timeline-content">
+                        <h3>Material Collection</h3>
+                        <p>Waste sorted at habitat, packaged in standard containers, transported via robotic cart</p>
+                        <span class="timeline-duration">Duration: 30-60 minutes</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">2</div>
+                    <div class="timeline-content">
+                        <h3>Airlock Loading</h3>
+                        <p>Material loaded into input hopper through dust-mitigated airlock system</p>
+                        <span class="timeline-duration">Duration: 10-15 minutes</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">3</div>
+                    <div class="timeline-content">
+                        <h3>AI Classification</h3>
+                        <p>Spectroscopic scanning and machine learning classification of materials</p>
+                        <span class="timeline-duration">Duration: 5-10 minutes</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">4</div>
+                    <div class="timeline-content">
+                        <h3>Separation Process</h3>
+                        <p>Optical, magnetic, and density-based sorting into material streams</p>
+                        <span class="timeline-duration">Duration: 10-20 minutes</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">5</div>
+                    <div class="timeline-content">
+                        <h3>Chamber Processing</h3>
+                        <p>Material-specific recycling: thermal, mechanical, chemical, or biological</p>
+                        <span class="timeline-duration">Duration: 30-180 minutes</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">6</div>
+                    <div class="timeline-content">
+                        <h3>Output Packaging</h3>
+                        <p>Products sealed, labeled with RFID, and moved to inventory storage</p>
+                        <span class="timeline-duration">Duration: 10-15 minutes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>NetworkBuster NLRS</h4>
+                    <p>Advancing sustainable space exploration through innovative recycling technology.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="../docs/technical-specs/system-architecture.md">System Architecture</a></li>
+                        <li><a href="../docs/technical-specs/material-processing.md">Material Processing</a></li>
+                        <li><a href="../docs/environmental-data/lunar-conditions.md">Lunar Conditions</a></li>
+                        <li><a href="../docs/operational-protocols/standard-operation.md">Operations Manual</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Project Info</h4>
+                    <p><strong>Version:</strong> 1.0.0</p>
+                    <p><strong>Last Updated:</strong> December 3, 2025</p>
+                    <p><strong>Status:</strong> Active Development</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 NetworkBuster Research Division. MIT License.</p>
+                <p>Payload: 500g+ | Recovery: 95% | Lifetime: 10+ years</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AI Chatbot -->
+    <div id="netbot-chat"></div>
+    <!-- Floating Documentation Button for quick access -->
+    <a href="/documentation.html" id="floating-docs-btn" title="Open Documentation">📖 Docs</a>
+
+        <script src="script.js"></script>
+        <script src="chatbot.js"></script>
+        <script>
+        // Net Bot Toggle Button Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('toggle-netbot');
+            const netbotChat = document.getElementById('netbot-chat');
+            const netbotStatus = document.getElementById('netbot-status');
+            let netbotOn = true;
+            if (toggleBtn && netbotChat) {
+                toggleBtn.addEventListener('click', function() {
+                    netbotOn = !netbotOn;
+                    if (netbotOn) {
+                        netbotChat.style.display = '';
+                        netbotStatus.textContent = 'On';
+                    } else {
+                        netbotChat.style.display = 'none';
+                        netbotStatus.textContent = 'Off';
+                    }
+                });
+            }
+        });
+        // Floating Docs Button Style
+        const style = document.createElement('style');
+        style.innerHTML = `#floating-docs-btn { position: fixed; bottom: 100px; right: 30px; background: #6366f1; color: #fff; padding: 14px 22px; border-radius: 50px; box-shadow: 0 4px 16px rgba(99,102,241,0.2); font-size: 1.2rem; z-index: 10001; text-decoration: none; transition: background 0.2s; } #floating-docs-btn:hover { background: #4f46e5; }`;
+        document.head.appendChild(style);
+        </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  auth-ui:
+    build:
+      context: .
+      dockerfile: auth-ui/v750/Dockerfile
+    container_name: networkbuster-auth-v750
+    ports:
+      - "3003:3003"
+    environment:
+      - AUTH_PORT=3003
+      - NODE_ENV=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3003/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    networks:
+      - networkbuster-net
+    labels:
+      - "com.networkbuster.service=auth-ui"
+      - "com.networkbuster.version=v750"
+
+  # Web server
+  web:
+    image: node:24-alpine
+    container_name: networkbuster-web
+    working_dir: /app
+    volumes:
+      - ./server-universal.js:/app/server-universal.js
+      - ./public-landing.html:/app/public-landing.html
+      - ./web-app:/app/web-app
+      - ./package.json:/app/package.json
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+    command: sh -c "npm install && node server-universal.js"
+    restart: unless-stopped
+    networks:
+      - networkbuster-net
+    depends_on:
+      - auth-ui
+
+networks:
+  networkbuster-net:
+    driver: bridge

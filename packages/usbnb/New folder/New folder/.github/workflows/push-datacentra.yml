@@ -1,0 +1,56 @@
+name: Push DATACENTRA Branch
+
+on:
+  workflow_dispatch:  # Manual trigger
+  push:
+    branches:
+      - copilot/push-datacentra-upstream
+
+jobs:
+  push-datacentra:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.1.1
+        with:
+          fetch-depth: 0  # Fetch all history for all branches
+          
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+      - name: Check if DATACENTRA branch exists
+        id: check_branch
+        run: |
+          if git show-ref --verify --quiet refs/heads/DATACENTRA; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "DATACENTRA branch exists locally"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "DATACENTRA branch does not exist locally"
+          fi
+          
+      - name: Create DATACENTRA branch if needed
+        if: steps.check_branch.outputs.exists == 'false'
+        run: |
+          git checkout -b DATACENTRA
+          echo "Created DATACENTRA branch"
+          
+      - name: Sync DATACENTRA with current branch
+        run: |
+          git checkout DATACENTRA
+          git merge origin/${{ github.ref_name }} --no-edit || echo "Already up to date"
+          
+      - name: Push DATACENTRA branch
+        run: |
+          git push -u origin DATACENTRA
+          echo "✓ Successfully pushed DATACENTRA branch to origin with upstream tracking"
+          
+      - name: Verify push
+        run: |
+          git branch -vv | grep DATACENTRA
+          echo "✓ DATACENTRA branch is now tracking origin/DATACENTRA"

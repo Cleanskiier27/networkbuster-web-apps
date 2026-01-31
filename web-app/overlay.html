@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NetworkBuster AI World - Immersive 3D overlay system with real-time monitoring">
+    <title>AI World - NetworkBuster</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* AI World Specific Styles */
+        .aiworld-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0f0f2d 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .aiworld-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 240, 255, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(255, 0, 60, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 60%);
+            animation: pulse 8s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 1;
+        }
+
+        .aiworld-header {
+            position: relative;
+            z-index: 10;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .aiworld-title {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .aiworld-title h1 {
+            font-size: 28px;
+            font-weight: 900;
+            color: #00f0ff;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+            letter-spacing: 3px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 20px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .aiworld-nav {
+            display: flex;
+            gap: 16px;
+        }
+
+        .aiworld-nav a {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .aiworld-nav a:hover {
+            background: rgba(0, 240, 255, 0.2);
+            border-color: #00f0ff;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+
+        .aiworld-main {
+            position: relative;
+            z-index: 10;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .module-card {
+            background: rgba(10, 10, 30, 0.8);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .module-card:hover {
+            border-color: #00f0ff;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .module-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .module-icon {
+            font-size: 24px;
+        }
+
+        .module-title h3 {
+            color: #00f0ff;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .module-status {
+            font-size: 11px;
+            padding: 4px 10px;
+            background: rgba(0, 255, 0, 0.2);
+            color: #00ff00;
+            border-radius: 10px;
+        }
+
+        .module-content {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .module-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .stat-item {
+            background: rgba(0, 240, 255, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #00f0ff;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #64748b;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .action-btn {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #00f0ff 0%, #6366f1 100%);
+            color: #000;
+            font-weight: 700;
+            font-size: 13px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Full width card */
+        .module-card.full-width {
+            grid-column: span 3;
+        }
+
+        .module-card.half-width {
+            grid-column: span 2;
+        }
+
+        /* Component Preview */
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .component-preview {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .component-preview:hover {
+            border-color: #ff003c;
+            background: rgba(255, 0, 60, 0.1);
+        }
+
+        .component-preview .icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .component-preview .name {
+            font-size: 12px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .component-preview .path {
+            font-size: 10px;
+            color: #64748b;
+            margin-top: 4px;
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* Footer */
+        .aiworld-footer {
+            position: relative;
+            z-index: 10;
+            padding: 20px 40px;
+            border-top: 1px solid rgba(0, 240, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .aiworld-footer a {
+            color: #00f0ff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="aiworld-container">
+        <div class="aiworld-background"></div>
+        <div class="grid-overlay"></div>
+
+        <!-- Header -->
+        <header class="aiworld-header">
+            <div class="aiworld-title">
+                <span style="font-size: 36px;">🤖</span>
+                <h1>AI WORLD</h1>
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span style="color: #00ff00; font-size: 12px;">ONLINE</span>
+                </div>
+            </div>
+            <nav class="aiworld-nav">
+                <a href="/">🏠 Home</a>
+                <a href="/dashboard/">📊 Dashboard</a>
+                <a href="/control-panel">🎛️ Control</a>
+                <a href="/audio-lab">🎵 Audio</a>
+                <a href="/auth/">🔐 Auth</a>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="aiworld-main">
+            <!-- Avatar World Module -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-title">
+                        <span class="module-icon">👤</span>
+                        <h3>Avatar World</h3>
+                    </div>
+                    <span class="module-status">ACTIVE</span>
+                </div>
+                <div class="module-content">
+                    3D avatar rendering with React Three Fiber. Real-time position tracking and animated grid system.
+                </div>
+                <div class="module-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">60</div>
+                        <div class="stat-label">FPS</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">5K</div>
+                        <div class="stat-label">Stars</div>
+                    </div>
+                </div>
+                <a href="/challengerepo/real-time-overlay/" class="action-btn">Launch 3D View</a>
+            </div>
+
+            <!-- Satellite Map Module -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-title">
+                        <span class="module-icon">🛰️</span>
+                        <h3>Satellite Map</h3>
+                    </div>
+                    <span class="module-status">TRACKING</span>
+                </div>
+                <div class="module-content">
+                    Real-time satellite positioning with lunar surface mapping and coordinate tracking.
+                </div>
+                <div class="module-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Satellites</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">98%</div>
+                        <div class="stat-label">Coverage</div>
+                    </div>
+                </div>
+                <button class="action-btn">View Map</button>
+            </div>
+
+            <!-- Camera Feed Module -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-title">
+                        <span class="module-icon">📹</span>
+                        <h3>Camera Feeds</h3>
+                    </div>
+                    <span class="module-status">4 LIVE</span>
+                </div>
+                <div class="module-content">
+                    Multi-camera monitoring with SD, HD, IR, and AUX feeds. Real-time FPS and quality indicators.
+                </div>
+                <div class="module-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">Cameras</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">60</div>
+                        <div class="stat-label">Max FPS</div>
+                    </div>
+                </div>
+                <button class="action-btn">View Feeds</button>
+            </div>
+
+            <!-- Connection Graph Module -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-title">
+                        <span class="module-icon">🔗</span>
+                        <h3>Connection Graph</h3>
+                    </div>
+                    <span class="module-status">SYNCED</span>
+                </div>
+                <div class="module-content">
+                    Network topology visualization showing node connections and data flow patterns.
+                </div>
+                <div class="module-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">24</div>
+                        <div class="stat-label">Nodes</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">156</div>
+                        <div class="stat-label">Links</div>
+                    </div>
+                </div>
+                <button class="action-btn">View Graph</button>
+            </div>
+
+            <!-- Immersive Reader Module -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-title">
+                        <span class="module-icon">👁️</span>
+                        <h3>Immersive Reader</h3>
+                    </div>
+                    <span class="module-status">READY</span>
+                </div>
+                <div class="module-content">
+                    AI-powered document reader with focus mode, text highlighting, and comprehension tools.
+                </div>
+                <div class="module-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">AI</div>
+                        <div class="stat-label">Engine</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">∞</div>
+                        <div class="stat-label">Modes</div>
+                    </div>
+                </div>
+                <button class="action-btn">Open Reader</button>
+            </div>
+
+            <!-- Audio Lab Module -->
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-title">
+                        <span class="module-icon">🎵</span>
+                        <h3>Audio Lab</h3>
+                    </div>
+                    <span class="module-status">PORT 3002</span>
+                </div>
+                <div class="module-content">
+                    Real-time audio synthesis and frequency detection. AI-powered spectrum analysis.
+                </div>
+                <div class="module-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Bands</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">Waves</div>
+                    </div>
+                </div>
+                <a href="/audio-lab" class="action-btn">Open Lab</a>
+            </div>
+
+            <!-- Components Overview -->
+            <div class="module-card full-width">
+                <div class="module-header">
+                    <div class="module-title">
+                        <span class="module-icon">🧩</span>
+                        <h3>AI World Components</h3>
+                    </div>
+                    <span class="module-status">5 MODULES</span>
+                </div>
+                <div class="component-grid">
+                    <div class="component-preview">
+                        <div class="icon">👤</div>
+                        <div class="name">AvatarWorld</div>
+                        <div class="path">/components/AvatarWorld.jsx</div>
+                    </div>
+                    <div class="component-preview">
+                        <div class="icon">🛰️</div>
+                        <div class="name">SatelliteMap</div>
+                        <div class="path">/components/SatelliteMap.jsx</div>
+                    </div>
+                    <div class="component-preview">
+                        <div class="icon">📹</div>
+                        <div class="name">CameraFeed</div>
+                        <div class="path">/components/CameraFeed.jsx</div>
+                    </div>
+                    <div class="component-preview">
+                        <div class="icon">🔗</div>
+                        <div class="name">ConnectionGraph</div>
+                        <div class="path">/components/ConnectionGraph.jsx</div>
+                    </div>
+                    <div class="component-preview">
+                        <div class="icon">👁️</div>
+                        <div class="name">ImmersiveReader</div>
+                        <div class="path">/components/ImmersiveReader.jsx</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="module-card full-width">
+                <div class="module-header">
+                    <div class="module-title">
+                        <span class="module-icon">🔗</span>
+                        <h3>NetworkBuster.net URL Map</h3>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px;">
+                    <div style="background: rgba(0,0,0,0.3); padding: 16px; border-radius: 8px;">
+                        <h4 style="color: #00f0ff; margin-bottom: 12px;">📄 Main Pages</h4>
+                        <div style="font-size: 13px; line-height: 2;">
+                            <a href="/" style="color: #94a3b8; display: block;">/ Home</a>
+                            <a href="/about.html" style="color: #94a3b8; display: block;">/about.html</a>
+                            <a href="/projects.html" style="color: #94a3b8; display: block;">/projects.html</a>
+                            <a href="/technology.html" style="color: #94a3b8; display: block;">/technology.html</a>
+                            <a href="/documentation.html" style="color: #94a3b8; display: block;">/documentation.html</a>
+                            <a href="/contact.html" style="color: #94a3b8; display: block;">/contact.html</a>
+                        </div>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.3); padding: 16px; border-radius: 8px;">
+                        <h4 style="color: #ff003c; margin-bottom: 12px;">🎮 Apps</h4>
+                        <div style="font-size: 13px; line-height: 2;">
+                            <a href="/dashboard/" style="color: #94a3b8; display: block;">/dashboard/</a>
+                            <a href="/control-panel" style="color: #94a3b8; display: block;">/control-panel</a>
+                            <a href="/audio-lab" style="color: #94a3b8; display: block;">/audio-lab</a>
+                            <a href="/auth/" style="color: #94a3b8; display: block;">/auth/</a>
+                            <a href="/overlay/" style="color: #94a3b8; display: block;">/overlay/</a>
+                            <a href="/blog/" style="color: #94a3b8; display: block;">/blog/</a>
+                        </div>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.3); padding: 16px; border-radius: 8px;">
+                        <h4 style="color: #00ff00; margin-bottom: 12px;">🔌 API Endpoints</h4>
+                        <div style="font-size: 13px; line-height: 2;">
+                            <span style="color: #94a3b8; display: block;">/api/health (3000)</span>
+                            <span style="color: #94a3b8; display: block;">/api/specs (3001)</span>
+                            <span style="color: #94a3b8; display: block;">/api/audio/* (3002)</span>
+                            <span style="color: #94a3b8; display: block;">/api/auth/* (3003)</span>
+                            <span style="color: #94a3b8; display: block;">/api/docs (3003)</span>
+                        </div>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.3); padding: 16px; border-radius: 8px;">
+                        <h4 style="color: #f59e0b; margin-bottom: 12px;">🛠️ Tools</h4>
+                        <div style="font-size: 13px; line-height: 2;">
+                            <a href="/#calculator" style="color: #94a3b8; display: block;">/#calculator</a>
+                            <a href="/#data" style="color: #94a3b8; display: block;">/#data</a>
+                            <a href="/flash-commands.html" style="color: #94a3b8; display: block;">/flash-commands.html</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="aiworld-footer">
+            <div>
+                <strong>NetworkBuster AI World</strong> &mdash; Base URL: <a href="https://networkbuster.net">networkbuster.net</a>
+            </div>
+            <div>
+                Version 1.0.1 | Servers: Web (3000) • API (3001) • Audio (3002) • Auth (3003)
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Update clock
+        setInterval(() => {
+            const clock = document.querySelector('.status-indicator span:last-child');
+            if (clock) {
+                // Keep as ONLINE
+            }
+        }, 1000);
+
+        // Button click handlers
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (!this.href) {
+                    e.preventDefault();
+                    alert('Feature coming soon!');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

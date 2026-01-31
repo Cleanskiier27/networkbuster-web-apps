@@ -1,0 +1,65 @@
+MIT License
+
+Copyright (c) 2025 NetworkBuster Research Division
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+ADDITIONAL NOTES FOR LUNAR DEPLOYMENT:
+
+This software and documentation package ("NetworkBuster Lunar Recycling System")
+is intended for use in lunar surface operations and extreme space environments.
+
+DISCLAIMER OF WARRANTY FOR SPACE APPLICATIONS:
+While this software has been designed with space-grade principles and best
+practices, actual deployment in lunar environments requires extensive testing,
+validation, and certification by appropriate space agencies and regulatory bodies.
+
+The authors and NetworkBuster Research Division make no warranties regarding
+the suitability of this software for actual space missions without proper
+qualification and testing procedures.
+
+EXPORT CONTROL:
+Users must comply with all applicable export control regulations, including
+but not limited to the International Traffic in Arms Regulations (ITAR) and
+Export Administration Regulations (EAR), when using or distributing this
+documentation or any derived works.
+
+SAFETY CRITICAL SYSTEMS:
+This documentation describes systems intended for autonomous operation in
+life-sustaining environments. Any implementation must undergo rigorous safety
+analysis, fault tree analysis, and failure modes and effects analysis (FMEA)
+before deployment.
+
+HUMAN RATING:
+Systems described herein that may affect crew safety must be human-rated
+according to NASA-STD-3001 or equivalent standards before use in crewed missions.
+
+INTELLECTUAL PROPERTY:
+Portions of this documentation may reference patented technologies or
+proprietary methods. Users are responsible for obtaining necessary licenses
+for any patented technologies before implementation.
+
+For questions regarding commercial use, licensing, or partnerships, contact:
+NetworkBuster Research Division
+research@networkbuster.net
+
+Last Updated: December 3, 2025
+License Version: 1.0

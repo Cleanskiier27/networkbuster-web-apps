@@ -1,0 +1,146 @@
+.team-page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+  color: #fff;
+}
+
+.team-header {
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.team-header h1 {
+  margin: 0;
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.team-header p {
+  margin: 0.5rem 0 0 0;
+  font-size: 1.2rem;
+  opacity: 0.95;
+}
+
+.team-intro {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 12px;
+  border-left: 4px solid #667eea;
+}
+
+.team-intro h2 {
+  margin-top: 0;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.team-intro p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.team-members-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  width: 100%;
+}
+
+.team-member-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.team-member-card:hover {
+  transform: translateY(-8px);
+  border-color: #667eea;
+  background: rgba(102, 126, 234, 0.15);
+  box-shadow: 0 12px 24px rgba(102, 126, 234, 0.3);
+}
+
+.member-avatar {
+  font-size: 4rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.member-info h3 {
+  margin: 1rem 0 0.5rem 0;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.member-role {
+  color: #667eea;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.member-expertise {
+  color: #a0aec0;
+  font-size: 0.95rem;
+  margin: 0 0 1rem 0;
+  font-weight: 500;
+}
+
+.member-bio {
+  color: #cbd5e0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.team-stats {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.stat {
+  background: rgba(102, 126, 234, 0.2);
+  border: 1px solid rgba(102, 126, 234, 0.4);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.stat:hover {
+  background: rgba(102, 126, 234, 0.3);
+  border-color: #667eea;
+  transform: scale(1.05);
+}
+
+.stat h3 {
+  margin: 0;
+  font-size: 2.5rem;
+  color: #667eea;
+  font-weight: 700;
+}
+
+.stat p {
+  margin: 0.5rem 0 0 0;
+  font-size: 1rem;
+  color: #a0aec0;
+}

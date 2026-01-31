@@ -1,0 +1,95 @@
+name: Deploy to Azure Container Apps (Optional)
+
+on:
+  push:
+    branches:
+      - main
+      - bigtree
+  workflow_dispatch:
+
+env:
+  REGISTRY_LOGIN_SERVER: ${{ secrets.AZURE_REGISTRY_LOGIN_SERVER || 'skipped' }}
+  REGISTRY_USERNAME: ${{ secrets.AZURE_REGISTRY_USERNAME || 'skipped' }}
+  REGISTRY_PASSWORD: ${{ secrets.AZURE_REGISTRY_PASSWORD || 'skipped' }}
+  RESOURCE_GROUP: networkbuster-rg
+  CONTAINER_APP_ENV: networkbuster-env
+
+jobs:
+  check-secrets:
+    runs-on: ubuntu-latest
+    outputs:
+      has-secrets: ${{ steps.check.outputs.has-secrets }}
+    steps:
+      - name: Check if secrets are configured
+        id: check
+        run: |
+          if [ -z "${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}" ]; then
+            echo "has-secrets=false" >> $GITHUB_OUTPUT
+            echo "⚠️ Azure secrets not configured - skipping deployment"
+          else
+            echo "has-secrets=true" >> $GITHUB_OUTPUT
+          fi
+  
+  build-and-deploy:
+    needs: check-secrets
+    if: needs.check-secrets.outputs.has-secrets == 'true'
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Azure Container Registry
+        run: |
+          echo "${{ env.REGISTRY_PASSWORD }}" | docker login -u "${{ env.REGISTRY_USERNAME }}" --password-stdin "${{ env.REGISTRY_LOGIN_SERVER }}"
+
+      - name: Build and push Main Server image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ env.REGISTRY_LOGIN_SERVER }}/networkbuster-server:latest
+            ${{ env.REGISTRY_LOGIN_SERVER }}/networkbuster-server:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push Overlay UI image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./challengerepo/real-time-overlay
+          file: ./challengerepo/real-time-overlay/Dockerfile
+          push: true
+          tags: |
+            ${{ env.REGISTRY_LOGIN_SERVER }}/networkbuster-overlay:latest
+            ${{ env.REGISTRY_LOGIN_SERVER }}/networkbuster-overlay:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Main Server Container App
+        run: |
+          az containerapp update \
+            --name networkbuster-server \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --image ${{ env.REGISTRY_LOGIN_SERVER }}/networkbuster-server:${{ github.sha }}
+
+      - name: Deploy Overlay UI Container App
+        run: |
+          az containerapp update \
+            --name networkbuster-overlay \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --image ${{ env.REGISTRY_LOGIN_SERVER }}/networkbuster-overlay:${{ github.sha }}
+
+      - name: Output deployment URLs
+        run: |
+          echo "Main Server: $(az containerapp show --name networkbuster-server --resource-group ${{ env.RESOURCE_GROUP }} --query 'properties.configuration.ingress.fqdn' -o tsv)"
+          echo "Overlay UI: $(az containerapp show --name networkbuster-overlay --resource-group ${{ env.RESOURCE_GROUP }} --query 'properties.configuration.ingress.fqdn' -o tsv)"

@@ -98,3 +98,23 @@ npm start
 **Last Updated**: December 3, 2025  
 **Version**: 1.0.0  
 **Status**: Active Development - Documentation Phase
+
+---
+
+## 📦 Distribution & Installation (Windows)  
+
+- Build artifact (ZIP): `npm run dist:zip` — creates `dist/<name>-<version>.zip` with required files.  
+- Create desktop launcher: `npm run release:create-shortcut` — creates a shortcut called "NetworkBuster Launcher" on the current user desktop pointing to `start-desktop.bat`.  
+- Build NSIS installer: `npm run dist:nsis` — builds an NSIS installer (requires NSIS / makensis in PATH).  
+- Start from desktop: Double click the created shortcut or run `npm run start:desktop`.  
+
+Notes:  
+- The packaging scripts rely on `node`/`npm` being available in PATH and use PowerShell `Compress-Archive` on Windows.  
+- For a branded installer include an ICO at `scripts/installer/icon.ico` or place SVG/PNG assets in `scripts/installer/branding/`. You can generate an ICO from `scripts/installer/icon-placeholder.png` using `scripts/installer/convert-icon.ps1` (requires ImageMagick `magick`).  
+- An End User License Agreement (`scripts/installer/EULA.txt`) is bundled into the installer and is required.  
+- To test locally on Windows see `scripts/test-local-build.ps1` (requires Node, npm, Git, NSIS, and optionally ImageMagick).  
+- For CI, add a job that runs `npm run dist:zip`, `npm run dist:nsis` (on windows), archives `dist/` as release artifacts, and tags the release in GitHub.  
+
+---
+
+**Contributing:** See `CONTRIBUTING.md` for guidelines on releases and artifact verification.

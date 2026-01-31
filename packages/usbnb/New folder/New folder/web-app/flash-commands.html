@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Commands - Terminal AI Interface</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background: linear-gradient(135deg, #1f6feb, #388bfd);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        .card:hover {
+            border-color: #58a6ff;
+            box-shadow: 0 0 20px rgba(88, 166, 255, 0.2);
+            transform: translateY(-5px);
+        }
+        .card h3 {
+            color: #58a6ff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card p {
+            color: #8b949e;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .btn {
+            background: #238636;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: monospace;
+            font-size: 0.9em;
+            transition: all 0.2s;
+            flex: 1;
+            min-width: 120px;
+        }
+        .btn:hover {
+            background: #2ea043;
+            transform: scale(1.05);
+        }
+        .btn.ai {
+            background: #1f6feb;
+        }
+        .btn.ai:hover {
+            background: #388bfd;
+        }
+        .btn.danger {
+            background: #da3633;
+        }
+        .btn.danger:hover {
+            background: #f85149;
+        }
+        .terminal {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        .terminal-line {
+            color: #58a6ff;
+            margin: 5px 0;
+            display: flex;
+        }
+        .prompt {
+            color: #79c0ff;
+            margin-right: 10px;
+            min-width: 20px;
+        }
+        .output {
+            color: #8b949e;
+            margin: 5px 0;
+        }
+        .success {
+            color: #3fb950;
+        }
+        .warning {
+            color: #d29922;
+        }
+        .error {
+            color: #f85149;
+        }
+        .ai-features {
+            background: #161b22;
+            border-left: 4px solid #1f6feb;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .ai-features h2 {
+            color: #58a6ff;
+            margin-bottom: 15px;
+        }
+        .feature-list {
+            list-style: none;
+        }
+        .feature-list li {
+            padding: 8px 0;
+            color: #8b949e;
+            border-bottom: 1px solid #30363d;
+        }
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        .feature-list strong {
+            color: #58a6ff;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #8b949e;
+            border-top: 1px solid #30363d;
+            margin-top: 40px;
+        }
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            header {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ NetworkBuster Flash Commands</h1>
+            <p class="subtitle">AI-Powered Terminal Interface with One-Click Deployment</p>
+        </header>
+
+        <div class="ai-features">
+            <h2>🤖 AI Terminal Behavior Features</h2>
+            <ul class="feature-list">
+                <li><strong>Smart Automation:</strong> Flash commands handle routine tasks in one click</li>
+                <li><strong>AI Analysis:</strong> Automatic codebase analysis and reporting</li>
+                <li><strong>Smart Suggestions:</strong> AI-powered optimization recommendations</li>
+                <li><strong>Auto Documentation:</strong> Generate documentation automatically</li>
+                <li><strong>Performance Optimization:</strong> AI-driven performance tuning</li>
+                <li><strong>Intelligent Syncing:</strong> Branch synchronization with conflict resolution</li>
+            </ul>
+        </div>
+
+        <h2 style="color: #58a6ff; margin: 30px 0 20px 0;">Deployment Commands</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>🚀 Flash Deploy</h3>
+                <p>Deploy to Vercel production in one command. Automatically commits changes with timestamp.</p>
+                <div class="btn-group">
+                    <button class="btn" onclick="executeCommand('flash_deploy')">Run Deploy</button>
+                </div>
+                <div class="terminal" style="margin-top: 15px; font-size: 0.85em;">
+                    <div class="terminal-line">
+                        <span class="prompt">$</span>
+                        <span>flash_commands.bat deploy</span>
+                    </div>
+                    <div class="output success">✅ Deployed to production</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🔄 Flash Sync</h3>
+                <p>Synchronize main and bigtree branches automatically with conflict resolution.</p>
+                <div class="btn-group">
+                    <button class="btn" onclick="executeCommand('flash_sync')">Run Sync</button>
+                </div>
+                <div class="terminal" style="margin-top: 15px; font-size: 0.85em;">
+                    <div class="terminal-line">
+                        <span class="prompt">$</span>
+                        <span>flash_commands.bat sync</span>
+                    </div>
+                    <div class="output success">✅ Branches synced</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>💻 Flash Dev</h3>
+                <p>Start development server with hot-reload and instant feedback.</p>
+                <div class="btn-group">
+                    <button class="btn" onclick="executeCommand('flash_dev')">Run Dev</button>
+                </div>
+                <div class="terminal" style="margin-top: 15px; font-size: 0.85em;">
+                    <div class="terminal-line">
+                        <span class="prompt">$</span>
+                        <span>npm start</span>
+                    </div>
+                    <div class="output">Server running at localhost:3000</div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="color: #58a6ff; margin: 30px 0 20px 0;">Build & Test Commands</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>🔨 Flash Build</h3>
+                <p>Build all applications (dashboard, overlay, etc) for production.</p>
+                <div class="btn-group">
+                    <button class="btn" onclick="executeCommand('flash_build')">Run Build</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🧪 Flash Test</h3>
+                <p>Run validation checks and tests across the codebase.</p>
+                <div class="btn-group">
+                    <button class="btn" onclick="executeCommand('flash_test')">Run Tests</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🧹 Flash Clean</h3>
+                <p>Clean all dependencies and reinstall fresh. Useful for resolving issues.</p>
+                <div class="btn-group">
+                    <button class="btn danger" onclick="executeCommand('flash_clean')">Clean All</button>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="color: #58a6ff; margin: 30px 0 20px 0;">Utility Commands</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>📊 Flash Status</h3>
+                <p>Check git status and deployment information at a glance.</p>
+                <div class="btn-group">
+                    <button class="btn" onclick="executeCommand('flash_status')">Show Status</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>💾 Flash Backup</h3>
+                <p>Create compressed backup of the project (excludes node_modules and .git).</p>
+                <div class="btn-group">
+                    <button class="btn" onclick="executeCommand('flash_backup')">Create Backup</button>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="color: #1f6feb; margin: 30px 0 20px 0;">🤖 AI-Powered Commands</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>🔍 Flash Analyze</h3>
+                <p>AI automatically analyzes your codebase, counts files, and provides insights.</p>
+                <div class="btn-group">
+                    <button class="btn ai" onclick="executeCommand('flash_analyze')">Analyze</button>
+                </div>
+                <div class="terminal" style="margin-top: 15px; font-size: 0.85em;">
+                    <div class="output">Files analyzed: 45</div>
+                    <div class="output">Git commits: 150+</div>
+                    <div class="output success">✅ Analysis complete</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>💡 Flash Suggest</h3>
+                <p>AI suggests code optimizations and best practices for your project.</p>
+                <div class="btn-group">
+                    <button class="btn ai" onclick="executeCommand('flash_suggest')">Get Suggestions</button>
+                </div>
+                <div class="terminal" style="margin-top: 15px; font-size: 0.85em;">
+                    <div class="output">- Code splitting recommended</div>
+                    <div class="output">- Lazy loading opportunities</div>
+                    <div class="output success">✅ 4 suggestions ready</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📚 Flash Docs</h3>
+                <p>AI generates project documentation automatically in markdown format.</p>
+                <div class="btn-group">
+                    <button class="btn ai" onclick="executeCommand('flash_docs')">Generate Docs</button>
+                </div>
+                <div class="terminal" style="margin-top: 15px; font-size: 0.85em;">
+                    <div class="output">Generating AUTO-DOCS.md...</div>
+                    <div class="output success">✅ Documentation created</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>⚡ Flash Optimize</h3>
+                <p>AI applies performance optimizations including compression and caching.</p>
+                <div class="btn-group">
+                    <button class="btn ai" onclick="executeCommand('flash_optimize')">Optimize</button>
+                </div>
+                <div class="terminal" style="margin-top: 15px; font-size: 0.85em;">
+                    <div class="output">- Gzip compression enabled</div>
+                    <div class="output">- Cache headers configured</div>
+                    <div class="output success">✅ Optimized</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ai-features">
+            <h2>📋 How to Use Flash Commands</h2>
+            <ol style="margin: 15px 0; padding-left: 20px; color: #8b949e;">
+                <li><strong>Windows:</strong> <code style="background: #0d1117; padding: 2px 6px;">flash-commands.bat deploy</code></li>
+                <li><strong>Linux/Mac:</strong> <code style="background: #0d1117; padding: 2px 6px;">bash flash-commands.sh deploy</code></li>
+                <li><strong>Or use Web UI:</strong> Click any button above to execute</li>
+                <li><strong>Combine commands:</strong> Chain multiple commands together</li>
+            </ol>
+        </div>
+
+        <footer>
+            <p>NetworkBuster Flash Commands | AI-Powered Terminal Interface | v1.0.1</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Lightning-fast deployments, smart automation, and AI-driven development</p>
+        </footer>
+    </div>
+
+    <script>
+        function executeCommand(command) {
+            alert(`Command: ${command}\n\nThis would execute on your terminal. In the actual environment, click the corresponding terminal button or run:\nflash-commands.bat ${command}`);
+        }
+
+        // Add copy-to-clipboard functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const terminals = document.querySelectorAll('.terminal');
+            terminals.forEach(term => {
+                const copyBtn = document.createElement('button');
+                copyBtn.textContent = 'Copy';
+                copyBtn.style.cssText = 'position: absolute; top: 5px; right: 5px; padding: 4px 8px; font-size: 0.8em; cursor: pointer;';
+                copyBtn.onclick = function() {
+                    const text = term.innerText;
+                    navigator.clipboard.writeText(text);
+                    copyBtn.textContent = 'Copied!';
+                    setTimeout(() => copyBtn.textContent = 'Copy', 2000);
+                };
+                term.parentElement.style.position = 'relative';
+                term.parentElement.appendChild(copyBtn);
+            });
+        });
+    </script>
+</body>
+</html>

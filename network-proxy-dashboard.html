@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetworkBuster Network Proxy Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-left: 5px solid #667eea;
+        }
+        .card.status-running {
+            border-left-color: #48bb78;
+        }
+        .card.status-ready {
+            border-left-color: #4299e1;
+        }
+        .card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        .status-badge.running {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .status-badge.ready {
+            background: #bee3f8;
+            color: #2c5282;
+        }
+        .service-info {
+            background: #f7fafc;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 3px solid #667eea;
+        }
+        .service-info label {
+            display: block;
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+        .service-info code {
+            display: block;
+            background: white;
+            padding: 8px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            color: #333;
+            font-size: 0.95em;
+            word-break: break-all;
+        }
+        .architecture {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .architecture h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .flow-item {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .flow-arrow {
+            font-size: 1.5em;
+            color: #667eea;
+            flex: 0.5;
+            text-align: center;
+        }
+        .commands-grid {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        .commands-grid h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .command-item {
+            background: #1a202c;
+            color: #a0aec0;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        .command-item code {
+            color: #90cdf4;
+        }
+        .command-label {
+            display: block;
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 5px;
+            margin-left: -15px;
+            margin-top: 10px;
+            font-weight: 600;
+            font-family: 'Segoe UI';
+        }
+        .endpoints {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .endpoints h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .endpoint {
+            background: #f7fafc;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 3px solid #4299e1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .endpoint-method {
+            background: #4299e1;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-weight: 600;
+            font-size: 0.85em;
+            margin-right: 10px;
+        }
+        .endpoint-method.get { background: #48bb78; }
+        .endpoint-method.post { background: #ed8936; }
+        .endpoint-method.patch { background: #9f7aea; }
+        .endpoint-method.delete { background: #f56565; }
+        .endpoint-url {
+            font-family: 'Monaco', 'Courier New', monospace;
+            color: #333;
+            flex: 1;
+        }
+        .endpoint-desc {
+            font-size: 0.9em;
+            color: #666;
+            margin-left: auto;
+            padding-left: 10px;
+        }
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            opacity: 0.9;
+        }
+        @media (max-width: 768px) {
+            .flow {
+                flex-direction: column;
+            }
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌐 NetworkBuster Network Proxy</h1>
+            <p>Network configuration for API routing and frontend access</p>
+        </div>
+
+        <div class="architecture">
+            <h2>📊 Network Architecture</h2>
+            <div class="flow">
+                <div class="flow-item">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🖥️</div>
+                    <div>Client Browser</div>
+                    <div style="font-size: 0.85em; margin-top: 5px; opacity: 0.9;">192.168.1.180</div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-item">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🎨</div>
+                    <div>Frontend (5173)</div>
+                    <div style="font-size: 0.85em; margin-top: 5px; opacity: 0.9;">Vite + React</div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-item">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🔄</div>
+                    <div>Proxy (3000)</div>
+                    <div style="font-size: 0.85em; margin-top: 5px; opacity: 0.9;">HTTP-Proxy</div>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-item">
+                    <div style="font-size: 2em; margin-bottom: 10px;">⚙️</div>
+                    <div>Backend (3001)</div>
+                    <div style="font-size: 0.85em; margin-top: 5px; opacity: 0.9;">Express API</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card status-running">
+                <h3>
+                    🎨 Frontend Server
+                    <span class="status-badge running">Running</span>
+                </h3>
+                <div class="service-info">
+                    <label>Network Access</label>
+                    <code>http://192.168.1.180:5173</code>
+                </div>
+                <div class="service-info">
+                    <label>Localhost</label>
+                    <code>http://localhost:5173</code>
+                </div>
+                <div class="service-info">
+                    <label>Technology</label>
+                    <code>Vite Dev Server + React 19.2.3</code>
+                </div>
+                <div class="service-info">
+                    <label>Purpose</label>
+                    <code>React UI with HMR</code>
+                </div>
+            </div>
+
+            <div class="card status-running">
+                <h3>
+                    🔄 Proxy Server
+                    <span class="status-badge running">Running</span>
+                </h3>
+                <div class="service-info">
+                    <label>Network Access</label>
+                    <code>http://192.168.1.180:3000</code>
+                </div>
+                <div class="service-info">
+                    <label>Localhost</label>
+                    <code>http://localhost:3000</code>
+                </div>
+                <div class="service-info">
+                    <label>Technology</label>
+                    <code>Node.js http-proxy</code>
+                </div>
+                <div class="service-info">
+                    <label>Forwarding To</label>
+                    <code>http://localhost:3001</code>
+                </div>
+            </div>
+
+            <div class="card status-running">
+                <h3>
+                    ⚙️ Backend Server
+                    <span class="status-badge running">Running</span>
+                </h3>
+                <div class="service-info">
+                    <label>Network Access</label>
+                    <code>http://192.168.1.180:3001</code>
+                </div>
+                <div class="service-info">
+                    <label>Localhost</label>
+                    <code>http://localhost:3001</code>
+                </div>
+                <div class="service-info">
+                    <label>Technology</label>
+                    <code>Express 5.2.1</code>
+                </div>
+                <div class="service-info">
+                    <label>Provides</label>
+                    <code>/api/dashboard, /api/secrets, etc</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="commands-grid">
+            <h2>🚀 Quick Start Commands</h2>
+            <span class="command-label">Terminal 1: Start Backend Server</span>
+            <div class="command-item"><code>npm start</code></div>
+            
+            <span class="command-label">Terminal 2: Start Network Proxy (Port 3000)</span>
+            <div class="command-item"><code>npm run proxy:3000</code></div>
+            
+            <span class="command-label">Terminal 3: Start Frontend Dev Server (Optional)</span>
+            <div class="command-item"><code>npm run dev</code></div>
+            
+            <span class="command-label">Alternative: Proxy on Port 8080</span>
+            <div class="command-item"><code>npm run proxy:8080</code></div>
+            
+            <span class="command-label">Windows: Start All Services</span>
+            <div class="command-item"><code>.\start-all-services.ps1 -ProxyPort 3000</code></div>
+        </div>
+
+        <div class="endpoints">
+            <h2>📡 Available API Endpoints</h2>
+            
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: #333; font-size: 1.1em; margin-bottom: 10px;">Dashboard Endpoints</h3>
+                <div class="endpoint">
+                    <span class="endpoint-method get">GET</span>
+                    <span class="endpoint-url">/api/dashboard/metrics</span>
+                    <span class="endpoint-desc">Real-time metrics</span>
+                </div>
+                <div class="endpoint">
+                    <span class="endpoint-method get">GET</span>
+                    <span class="endpoint-url">/api/dashboard/charts</span>
+                    <span class="endpoint-desc">Chart data</span>
+                </div>
+                <div class="endpoint">
+                    <span class="endpoint-method get">GET</span>
+                    <span class="endpoint-url">/api/dashboard/services</span>
+                    <span class="endpoint-desc">Service status</span>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <h3 style="color: #333; font-size: 1.1em; margin-bottom: 10px;">Secrets Management</h3>
+                <div class="endpoint">
+                    <span class="endpoint-method get">GET</span>
+                    <span class="endpoint-url">/api/secrets</span>
+                    <span class="endpoint-desc">List all secrets</span>
+                </div>
+                <div class="endpoint">
+                    <span class="endpoint-method post">POST</span>
+                    <span class="endpoint-url">/api/secrets</span>
+                    <span class="endpoint-desc">Create secret</span>
+                </div>
+                <div class="endpoint">
+                    <span class="endpoint-method patch">PATCH</span>
+                    <span class="endpoint-url">/api/secrets/:id</span>
+                    <span class="endpoint-desc">Update secret</span>
+                </div>
+                <div class="endpoint">
+                    <span class="endpoint-method delete">DELETE</span>
+                    <span class="endpoint-url">/api/secrets/:id</span>
+                    <span class="endpoint-desc">Delete secret</span>
+                </div>
+            </div>
+
+            <div>
+                <h3 style="color: #333; font-size: 1.1em; margin-bottom: 10px;">System Information</h3>
+                <div class="endpoint">
+                    <span class="endpoint-method get">GET</span>
+                    <span class="endpoint-url">/api/health</span>
+                    <span class="endpoint-desc">Health check</span>
+                </div>
+                <div class="endpoint">
+                    <span class="endpoint-method get">GET</span>
+                    <span class="endpoint-url">/api/status</span>
+                    <span class="endpoint-desc">System status</span>
+                </div>
+                <div class="endpoint">
+                    <span class="endpoint-method get">GET</span>
+                    <span class="endpoint-url">/api/logs</span>
+                    <span class="endpoint-desc">Application logs</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>✨ NetworkBuster Network Proxy Configuration - All Services Ready</p>
+            <p style="margin-top: 10px; opacity: 0.8;">Access at: http://192.168.1.180:5173</p>
+        </div>
+    </div>
+
+    <script>
+        // Auto-refresh status every 10 seconds
+        setInterval(() => {
+            // Could add real-time status checking here
+        }, 10000);
+    </script>
+</body>
+</html>

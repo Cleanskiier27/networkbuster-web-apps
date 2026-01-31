@@ -1,0 +1,53 @@
+{
+  "name": "networkbuster",
+  "description": "NetworkBuster Server - High-performance network server built with Node.js and Express",
+  "namespace": "docker.io/networkbuster",
+  "repository": "docker.io/networkbuster/server",
+  "version": "1.0.1",
+  "tags": [
+    "latest",
+    "1.0.1",
+    "stable",
+    "production"
+  ],
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".",
+    "args": {
+      "NODE_VERSION": "24"
+    }
+  },
+  "metadata": {
+    "documentation": "https://docs.networkbuster.net",
+    "source": "https://github.com/NetworkBuster/networkbuster.net",
+    "issues": "https://github.com/NetworkBuster/networkbuster.net/issues",
+    "license": "MIT"
+  },
+  "labels": {
+    "org.opencontainers.image.title": "NetworkBuster Server",
+    "org.opencontainers.image.description": "High-performance network server built with Node.js and Express",
+    "org.opencontainers.image.version": "1.0.1",
+    "org.opencontainers.image.source": "https://github.com/NetworkBuster/networkbuster.net",
+    "org.opencontainers.image.url": "https://networkbuster.net",
+    "org.opencontainers.image.vendor": "NetworkBuster",
+    "org.opencontainers.image.licenses": "MIT",
+    "org.opencontainers.image.documentation": "https://docs.networkbuster.net"
+  },
+  "registries": [
+    {
+      "name": "Docker Hub",
+      "url": "docker.io",
+      "image": "networkbuster/server:latest"
+    },
+    {
+      "name": "GitHub Container Registry",
+      "url": "ghcr.io",
+      "image": "ghcr.io/networkbuster/server:latest"
+    },
+    {
+      "name": "Azure Container Registry",
+      "url": "networkbuster.azurecr.io",
+      "image": "networkbuster.azurecr.io/server:latest"
+    }
+  ]
+}

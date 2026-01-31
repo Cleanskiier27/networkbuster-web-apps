@@ -1,0 +1,37 @@
+#!/bin/bash
+set -e
+
+# Debian postinst script
+# Called after package installation
+
+INSTALL_DIR="/opt/networkbuster"
+SERVICE_USER="networkbuster"
+
+case "$1" in
+    configure)
+        # Set proper permissions
+        chown -R ${SERVICE_USER}:${SERVICE_USER} ${INSTALL_DIR} || true
+        chmod 755 ${INSTALL_DIR}
+
+        # Create symlink to binary
+        ln -sf ${INSTALL_DIR}/server.js /usr/local/bin/networkbuster || true
+        chmod +x /usr/local/bin/networkbuster
+
+        # Install systemd service
+        if [ -f /lib/systemd/system/networkbuster.service ]; then
+            systemctl daemon-reload || true
+            systemctl enable networkbuster.service || true
+            systemctl start networkbuster.service || true
+        fi
+        ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+        ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

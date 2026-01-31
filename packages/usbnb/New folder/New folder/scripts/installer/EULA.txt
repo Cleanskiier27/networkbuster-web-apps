@@ -1,0 +1,20 @@
+NETWORKBUSTER END USER LICENSE AGREEMENT (EULA)
+
+Please read this End User License Agreement ("Agreement") carefully before installing or using NetworkBuster (the "Software"). By installing, copying, or otherwise using the Software, you agree to be bound by the terms of this Agreement.
+
+1. LICENSE GRANT
+NetworkBuster is licensed, not sold. Subject to the terms and conditions of this Agreement, the author grants you a non-exclusive, non-transferable license to use the Software.
+
+2. RESTRICTIONS
+You may not modify, reverse engineer, decompile, or disassemble the Software except to the extent expressly permitted by applicable law.
+
+3. NO WARRANTY
+The Software is provided "AS IS" without warranty of any kind. The author disclaims all warranties, express or implied.
+
+4. LIMITATION OF LIABILITY
+In no event shall the author be liable for any special, incidental, indirect, or consequential damages arising out of the use or inability to use the Software.
+
+5. GOVERNING LAW
+This Agreement shall be governed by the laws of the jurisdiction where the author maintains their primary residence, unless otherwise required by applicable law.
+
+If you do not agree to the terms of this Agreement, do not install or use the Software.

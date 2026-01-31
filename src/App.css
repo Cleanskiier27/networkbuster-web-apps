@@ -1,0 +1,349 @@
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+  color: #fff;
+}
+
+.app-header {
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.app-header.expanded {
+  padding: 2rem;
+}
+
+.app-header.collapsed {
+  padding: 1rem;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-title {
+  flex: 1;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.app-header p {
+  margin: 0.5rem 0 0 0;
+  font-size: 1.1rem;
+  opacity: 0.95;
+}
+
+.btn-toggle-header {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.btn-toggle-header:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.1);
+}
+
+.header-expanded {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.header-info {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.info-label {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.info-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+}
+
+.status-badge {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(16, 185, 129, 0.3);
+}
+
+.status-badge.online {
+  background: rgba(16, 185, 129, 0.3);
+  color: #6ee7b7;
+}
+
+.header-video-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+}
+
+.video-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-video-size {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: capitalize;
+}
+
+.btn-video-size:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.app-nav {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-bottom: 2px solid #667eea;
+}
+
+.app-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.app-nav a {
+  color: #a0aec0;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.app-nav a:hover {
+  color: #fff;
+  background-color: rgba(102, 126, 234, 0.2);
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+/* Video size responsive classes */
+.app-main[data-video-size="small"] {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.app-main[data-video-size="medium"] {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.app-main[data-video-size="large"] {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.app-main[data-video-size="fullscreen"] {
+  max-width: none;
+  padding: 0;
+}
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.welcome-section {
+  background: rgba(102, 126, 234, 0.1);
+  padding: 2rem;
+  border-radius: 12px;
+  border-left: 4px solid #667eea;
+}
+
+.welcome-section h2 {
+  margin-top: 0;
+  font-size: 2rem;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.primary-btn {
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 0.8em 1.5em;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+}
+
+.secondary-btn {
+  background-color: rgba(160, 174, 192, 0.2);
+  color: #a0aec0;
+  border: 1px solid #667eea;
+  padding: 0.8em 1.5em;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.secondary-btn:hover {
+  background-color: rgba(102, 126, 234, 0.2);
+  color: #fff;
+}
+
+.features-section,
+.servers-section {
+  background: rgba(45, 45, 68, 0.6);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.features-section h3,
+.servers-section h3 {
+  margin-top: 0;
+  color: #667eea;
+  font-size: 1.5rem;
+}
+
+.features-list,
+.servers-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0 0;
+}
+
+.features-list li,
+.servers-list li {
+  padding: 0.75rem 0;
+  font-size: 1.05rem;
+}
+
+.features-list li:before {
+  content: '✓ ';
+  color: #667eea;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.servers-list strong {
+  color: #a0aec0;
+  font-family: 'Courier New', monospace;
+}
+
+.app-footer {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+  text-align: center;
+  border-top: 1px solid rgba(102, 126, 234, 0.2);
+  color: #a0aec0;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .app-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .app-nav ul {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
+  }
+
+  .app-main {
+    padding: 1rem;
+  }
+}

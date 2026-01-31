@@ -1,0 +1,52 @@
+name: Network Boost CI
+
+on:
+  pull_request:
+    paths:
+      - 'contrib/Cleanskiier27-final/**'
+      - 'scripts/network-boost.*'
+
+jobs:
+  lint-and-dryrun-linux:
+    name: Lint (shellcheck) & Dry-run (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ShellCheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+      - name: Run ShellCheck on Linux script
+        run: |
+          shellcheck contrib/Cleanskiier27-final/scripts/network-boost.sh || true
+      - name: Run Linux dry-run
+        run: |
+          bash contrib/Cleanskiier27-final/scripts/network-boost.sh || true
+
+  lint-and-dryrun-windows:
+    name: Lint (PSScriptAnalyzer) & Dry-run (Windows)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PSScriptAnalyzer
+        shell: pwsh
+        run: |
+          Install-Module -Name PSScriptAnalyzer -Force -Scope CurrentUser -Confirm:$false
+      - name: Run PSScriptAnalyzer
+        shell: pwsh
+        run: |
+          Invoke-ScriptAnalyzer -Path .\contrib\Cleanskiier27-final\scripts\network-boost.ps1 -Recurse -Severity Error || true
+      - name: Windows dry-run
+        shell: pwsh
+        run: |
+          powershell -NoProfile -ExecutionPolicy Bypass -File .\contrib\Cleanskiier27-final\scripts\network-boost.ps1
+
+  optional-checks:
+    name: Optional checks (formatters/linter)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run shellcheck on all shell scripts (contrib)
+        run: |
+          for f in $(git ls-files 'contrib/**.sh'); do shellcheck "$f" || true; done
+      - name: Display generated files (for review)
+        run: |
+          ls -R contrib/Cleanskiier27-final || true
