@@ -1,0 +1,15 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "vite build",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"vite",
+				"build"
+			],
+			"group": "build"
+		}
+	]
+}
