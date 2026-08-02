@@ -364,6 +364,25 @@ if __name__ == "__main__":
     aws_org.add_kubernetes_cluster(eks_cluster)
     pkg.add_cloud_organization(aws_org)
 
+    # Add GCP organization with GKE cluster
+    gcp_org = CloudOrganization(
+        name="NetworkBuster-GCP",
+        provider=CloudProvider.GCP,
+        org_id="networkbuster-gcp",
+        project_id="networkbuster-project-123",
+        region="us-central1",
+        environment="production"
+    )
+
+    gke_cluster = create_gcp_gke_remote(
+        name="prod-gke",
+        cluster_name="nb-gke-prod",
+        project_id=gcp_org.project_id,
+        zone="us-central1-a"
+    )
+    gcp_org.add_kubernetes_cluster(gke_cluster)
+    pkg.add_cloud_organization(gcp_org)
+
     # Print configuration
     import json
     print(json.dumps(pkg.list_remotes(), indent=2))
